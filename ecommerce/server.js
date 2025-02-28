@@ -14,6 +14,7 @@ import { RedisStore } from 'connect-redis';
 import { createClient } from "redis";
 import { initDatabase } from './src/models/sequelize.js';
 import dotenv from 'dotenv';
+import { createServer } from "http";
 
 dotenv.config();
 
@@ -77,7 +78,10 @@ app.use('/api/checkout', checkoutRoutes);
 //     else { "Error occurred, server can't start", error }
 // })
 
-export default app;
+const server = createServer(app);
 
+export default (req, res) => {
+  server.emit("request", req, res);
+};
 
 initDatabase();
