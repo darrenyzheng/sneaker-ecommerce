@@ -73,15 +73,12 @@ app.use('/api/shop', shopRoutes);
 app.use('/api/checkout', checkoutRoutes);
 
 
-// app.listen(port, (error) => {
-//     if (!error) {
-//         console.log(`Server is running on ${port}`)
-//     }
-//     else { "Error occurred, server can't start", error }
-// })
-export default async (req, res) => {
-    await initRedis();  // Ensure Redis is connected before handling requests
-    app(req, res);  // Pass the request and response to the express app
-};
+app.listen(port, (error) => {
+    if (!error) {
+        console.log(`Server is running on ${port}`)
+    }
+    else { "Error occurred, server can't start", error }
+})
+
 
 initDatabase();
