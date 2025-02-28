@@ -1,10 +1,10 @@
 import express from 'express';
-import googleRoutes from './googleRoutes.js';
-import productRoutes from './productRoutes.js';
-import cartRoutes from './cartRoutes.js';
-import accountRoutes from './accountRoutes.js';
-import shopRoutes from './shopRoutes.js';
-import checkoutRoutes from './checkoutRoutes.js';
+import googleRoutes from '../routes/googleRoutes.js';
+import productRoutes from '../routes/productRoutes.js';
+import cartRoutes from '../routes/cartRoutes.js';
+import accountRoutes from '../routes/accountRoutes.js';
+import shopRoutes from '../routes/shopRoutes.js';
+import checkoutRoutes from '../routes/checkoutRoutes.js';
 import Stripe from 'stripe';
 import googleAuth from '../config/googleAuth.js';
 import passport from 'passport';
@@ -30,7 +30,10 @@ const client = createClient({
 
 client.on('error', err => console.log('Redis Client Error', err));
 
-await client.connect();
+// Ensure Redis connection occurs after the server starts
+const initRedis = async () => {
+    await client.connect();
+};
 
 
 let redisStore = new RedisStore({
@@ -76,6 +79,9 @@ app.use('/api/checkout', checkoutRoutes);
 //     }
 //     else { "Error occurred, server can't start", error }
 // })
-export default app;
+export default async (req, res) => {
+    await initRedis();  // Ensure Redis is connected before handling requests
+    app(req, res);  // Pass the request and response to the express app
+};
 
 initDatabase();
