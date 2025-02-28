@@ -2,14 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "ecommerce/src/server.js", 
+      "src": "ecommerce/server.js", 
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "ecommerce/src/server.js"
+      "dest": "ecommerce/server.js"
     }
   ]
 }
