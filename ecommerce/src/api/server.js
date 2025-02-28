@@ -1,18 +1,18 @@
 import express from 'express';
-import googleRoutes from './ecommerce/src/routes/googleRoutes.js';
-import productRoutes from './ecommerce/src/routes/productRoutes.js';
-import cartRoutes from './ecommerce/src/routes/cartRoutes.js';
-import accountRoutes from './ecommerce/src/routes/accountRoutes.js';
-import shopRoutes from './ecommerce/src/routes/shopRoutes.js';
-import checkoutRoutes from './ecommerce/src/routes/checkoutRoutes.js';
+import googleRoutes from './googleRoutes.js';
+import productRoutes from './productRoutes.js';
+import cartRoutes from './cartRoutes.js';
+import accountRoutes from './accountRoutes.js';
+import shopRoutes from './shopRoutes.js';
+import checkoutRoutes from './checkoutRoutes.js';
 import Stripe from 'stripe';
-import googleAuth from './ecommerce/src/config/googleAuth.js';
+import googleAuth from '../config/googleAuth.js';
 import passport from 'passport';
 import cors from 'cors';
 import session from 'express-session';
 import { RedisStore } from 'connect-redis';
 import { createClient } from "redis";
-import { initDatabase } from './ecommerce/src/models/sequelize.js';
+import { initDatabase } from '../models/sequelize.js';
 import dotenv from 'dotenv';
 
 dotenv.config();
