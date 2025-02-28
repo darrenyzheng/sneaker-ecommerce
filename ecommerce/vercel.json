@@ -5,5 +5,11 @@
       "source": "/api/(.*)",
       "destination": "/api/server.js"
     }
-  ]
+  ],
+  "build": {
+    "commands": [
+      "npm install pg",
+      "npm install"
+    ]
+  }
 }
