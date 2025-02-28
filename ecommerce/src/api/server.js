@@ -80,5 +80,6 @@ app.listen(port, (error) => {
     else { "Error occurred, server can't start", error }
 })
 
+export default app;
 
 initDatabase();
