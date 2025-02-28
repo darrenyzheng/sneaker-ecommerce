@@ -70,11 +70,14 @@ app.use('/api/shop', shopRoutes);
 app.use('/api/checkout', checkoutRoutes);
 
 
-app.listen(port, (error) => {
-    if (!error) {
-        console.log(`Server is running on ${port}`)
-    }
-    else { "Error occurred, server can't start", error }
-})
+// app.listen(port, (error) => {
+//     if (!error) {
+//         console.log(`Server is running on ${port}`)
+//     }
+//     else { "Error occurred, server can't start", error }
+// })
+
+export default app;
+
 
 initDatabase();
