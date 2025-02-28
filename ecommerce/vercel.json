@@ -11,5 +11,5 @@
       "src": "ecommerce/package.json",
       "use": "@vercel/node"
     }
-  ],
+  ]
 }
