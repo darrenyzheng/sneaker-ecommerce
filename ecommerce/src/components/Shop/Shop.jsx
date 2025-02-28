@@ -8,9 +8,9 @@ const Shop = () => {
     
     // Dynamically set the API base URL based on environment
     const apiUrl = import.meta.env.MODE === 'development'
-        ? 'http://localhost:5000/api'  // Local API during development
-        : '/api';  // Relative API route in production
-
+    ? 'http://localhost:5000/api'  // Local API during development
+    : 'https://sneaker-ecommerce-khaki.vercel.app/api';  // Absolute URL in production
+    
     useEffect(() => {
         fetch(`${apiUrl}/shop`, { method: 'GET' })
             .then((response) => {
