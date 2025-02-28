@@ -1,0 +1,30 @@
+.navbar {
+    display: flex;
+    background-color: black;
+    color: white;
+    min-height: 80px;
+    position: relative;
+    justify-content: flex-end;
+    padding-right: 2%;
+    align-items: center;
+    min-width: 600px;
+}
+
+.navbar a:visited {
+    color: inherit;
+}
+
+.navbar li.active {
+    color: #999999;
+}
+
+.navbar h1 {
+    position: absolute;
+    left: 2%;
+}
+
+.navbar ul li {
+    display: inline;
+    margin: 0 15px;
+    cursor: pointer;
+}

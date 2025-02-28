@@ -1,0 +1,110 @@
+.product img {
+    height: 50%;
+    width: 25%;
+    min-width: 400px;
+    min-height: 400px;
+  }
+  
+  .product {
+    display: flex;
+    width: 100%;
+    height: 90%;
+    align-items: center;
+    position: relative;
+    justify-content: center;
+  }
+  
+  .productInfo {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    margin: 0px 80px;
+    min-width: 300px;
+  }
+  
+  .productInfo h2 {
+    font-size: 50px;
+    margin-top: 0px;
+    margin-bottom: 30px;
+  }
+  
+  .productInfo h4 {
+    margin :0;
+    padding: 0;
+  }
+  
+  .productInfo p {
+    margin: 0;
+  }
+  
+  .productInfo .price {
+    margin-top: 20px;
+    font-size: 25px;
+  }
+  
+  .productInfo .brand {
+    font-size: 22px;
+    font-family: 'Montserrat', sans-serif;
+  
+  }
+  
+  .controls {
+    display: flex;
+    align-items: center;
+    height: 20%;
+    justify-content: space-between;
+  }
+  
+  .stock {
+    display: inline-flex;
+    background-color: #F0F0F0;
+    color: #FF8C00;
+    width: 20%;
+    height: 50px;
+    border-radius: 10px;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+  }
+  
+  .stock svg:first-of-type {
+    position: absolute;
+    right: 5%;
+  }
+  
+  .stock svg:first-of-type.inactive {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .product .backArrow {
+    position: absolute;
+    top: 2.5%;
+    left: 2.5%;
+  }
+  
+  .stock svg:last-of-type {
+    position: absolute;
+    left: 5%;
+  }
+  
+  .stock svg:last-of-type.inactive {
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  
+  .addToCartButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #FF8C00;
+    font-weight: bold;
+    width: 77%;
+    height:55px;
+  }
+  
+  .addToCartButton svg {
+    margin: 0px 20px;
+  }
+  

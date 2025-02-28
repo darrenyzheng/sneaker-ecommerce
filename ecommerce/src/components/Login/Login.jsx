@@ -7,20 +7,19 @@ import { useRef } from 'react';
 const Login = () => {
     const formRef = useRef(null);
 
-    const handleLoginSuccess = (credential) => {
-
-        // set the value of the token to the crendetial
+    const handleLoginSuccess = async (credential) => {
         formRef.current.token.value = credential.credential;
-
-        // submit the form
-        formRef.current.submit();
+        await formRef.current.submit();
     }
 
+
     return <div className='login'>
+
+        <h4>
+            Sign In using Google OAuth
+        </h4>
         <form
-            // setting the action to go to this address on submit 
             action='http://localhost:5000/api/auth/google'
-            // set the method to post 
             method='POST'
             ref={formRef}>
 
@@ -30,8 +29,9 @@ const Login = () => {
                 onError={() => {
                     console.log('Login Failed');
                 }}
-            />;
+            />
         </form>
+
     </div>
 
 }

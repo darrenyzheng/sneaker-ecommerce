@@ -1,0 +1,147 @@
+.sneaker {
+    display: inline-block;
+    flex-direction: column;
+    margin-top: 10px;
+    width: 300px;
+    border: 1px solid black;
+    cursor: pointer;
+    margin: 0px 20px;
+}
+
+.sneaker div {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    justify-content: center;
+    height: 100px;
+    width: 100%;
+    background-color: white;
+    padding: 0px 20px;
+}
+
+.sneaker div p,
+.sneaker div h4 {
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+}
+
+.sneaker div p:last-of-type {
+    position: absolute;
+    right: 2.5%;
+    top: 10%;
+}
+
+img {
+    width: 100%;
+    height: 250px;
+    filter: brightness(88%);
+}
+
+
+.accordion {
+    margin: 10px 0px;
+}
+
+.accordion .wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid black;
+    cursor: pointer;
+    height: 100%;
+}
+
+.accordion .items {
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+.accordion .items.expand {
+    max-height: 400px;
+}
+
+.accordion .items.collapse {
+    max-height: 0;
+
+}
+
+.accordion .prices {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.accordion input[type='number'] {
+    height: 30px;
+}
+
+form h1 {
+    margin: 0;
+}
+
+form {
+    display: inline-flex;
+    flex-direction: column;
+    padding: 10px;
+    margin: 0;
+    padding: 0px 20px;
+    width: 12%;
+    min-width: 200px;
+    position: relative;
+}
+
+form p {
+    margin: 0;
+}
+
+.sneakers {
+    display: inline-flex;
+    vertical-align: top;
+    flex-wrap: wrap;
+    width: 80%;
+}
+
+
+.sneaker {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+}
+
+.sneaker img {
+    border-bottom: 1px solid black;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pagination svg {
+    cursor: pointer;
+}
+
+.sneaker a {
+    color: black;
+}
+
+.sneaker a:hover {
+    color: black;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .header h1 {
+    font-size: 50px;
+    margin: 40px;
+    font-family: 'Inter', sans-serif;
+    border-bottom: 1px solid black;
+  }
+  

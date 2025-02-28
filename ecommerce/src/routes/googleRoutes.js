@@ -10,9 +10,17 @@ router.post('/google', passport.authenticate('google', {
 router.get('/google/redirect',
     passport.authenticate('google', { session: true }),
     (req, res) => {
-        // Authentication successful, send a JSON response
-        res.redirect('http://localhost:5173'); // Corrected the URL with a double slash
-        console.log('yes');
+        console.log('Successfully logged in!');
+
+        req.session.cart = {};
+        req.session.save(err => {
+            if (err) {
+                console.error('Error saving session:', err);
+            }
+            else {
+                res.redirect('http://localhost:5173'); 
+            }
+        });
     }
 );
 

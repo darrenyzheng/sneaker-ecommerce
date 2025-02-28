@@ -1,37 +1,74 @@
 import express from 'express';
 import googleRoutes from './src/routes/googleRoutes.js';
+import productRoutes from './src/routes/productRoutes.js';
+import cartRoutes from './src/routes/cartRoutes.js';
+import accountRoutes from './src/routes/accountRoutes.js';
+import shopRoutes from './src/routes/shopRoutes.js';
+import checkoutRoutes from './src/routes/checkoutRoutes.js';
+import Stripe from 'stripe';
 import googleAuth from './src/config/googleAuth.js';
 import passport from 'passport';
 import cors from 'cors';
 import session from 'express-session';
+import { RedisStore } from 'connect-redis';
+import { createClient } from "redis";
+import { initDatabase } from './src/models/sequelize.js';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const REDIS_SECRET = process.env.REDIS_SECRET;
+
+const client = createClient({
+    username: 'default',
+    password: REDIS_SECRET,
+    socket: {
+        host: 'redis-19977.c263.us-east-1-2.ec2.redns.redis-cloud.com',
+        port: 19977
+    }
+});
+
+client.on('error', err => console.log('Redis Client Error', err));
+
+await client.connect();
+
+
+let redisStore = new RedisStore({
+    client: client,
+    prefix: "sneaker-ecommerce"
+});
 
 const port = 5000;
-
 const app = express();
 
 app.use(session({
-    secret: 'your_secret_key', 
-    // session saved on every request only when session data has been directly modified 
+    secret: 'keyboard cat',
+
+    store: redisStore,
     resave: false,
-    // save a new, unmodified session unless data is added to it, true when tracking site visits 
     saveUninitialized: false,
-    // secure false so that it can be used with http protocol for localhost
-    cookie: { secure: false } 
+    cookie: { secure: false },
+    httpOnly: true,
+    maxAge: 1000 * 60 * 60 * 24
 }));
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:5173',
+    credentials: true,
+}
+));
 
-// boiler plate needed for passport to initialize for authentication and passport, adding the functionality for requests 
 app.use(passport.initialize());
+app.use(passport.session());
 
-// boiler plate needed for passport to integrate Passport with session-based authentication, allowing for deseralization user object 
-// and persist across requests 
-app.use(passport.session()); 
-
-// mounts or sets middleware, routes to a specific path. sends requests to /api/auth (base path), where the google routes will be 
-// accessible from 
 app.use('/api/auth', googleRoutes);
+app.use('/api/cart', cartRoutes);
+app.use('/api/account', accountRoutes);
+app.use('/api/product', productRoutes);
+app.use('/api/shop', shopRoutes);
+app.use('/api/checkout', checkoutRoutes);
+
 
 app.listen(port, (error) => {
     if (!error) {
@@ -39,3 +76,5 @@ app.listen(port, (error) => {
     }
     else { "Error occurred, server can't start", error }
 })
+
+initDatabase();

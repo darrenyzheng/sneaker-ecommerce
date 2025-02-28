@@ -1,3 +1,24 @@
 .login {
-    
+    display: flex;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 300px;
+    width: 600px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    border: 1px solid black;
+}
+
+.login h4 {
+    margin: 0;
+    padding-left: 25px;
+}
+
+.login form {
+    padding: 0;
+    padding-top: 10px;
 }
