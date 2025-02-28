@@ -2,16 +2,22 @@ import React, { useState, useEffect } from 'react';
 import { IoStorefront, IoCartSharp, IoPerson, IoLogIn, IoLogOut } from "react-icons/io5";
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import './Navbar.css';
+
 const Navbar = () => {
     const location = useLocation();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+    // Dynamically set the API base URL
+    const apiUrl = import.meta.env.MODE === 'development'
+        ? 'http://localhost:5000/api' // Local API during development
+        : '/api'; // Relative API route in production
+
     useEffect(() => {
         const checkLoginStatus = async () => {
             try {
-                const response = await fetch('http://localhost:5000/api/account/status', {
+                const response = await fetch(`${apiUrl}/account/status`, {
                     method: 'GET',
-                    credentials: 'include'
+                    credentials: 'include',
                 });
 
                 if (response.ok) {
@@ -24,14 +30,14 @@ const Navbar = () => {
         };
 
         checkLoginStatus();
-    }, []);
+    }, [apiUrl]); // Add apiUrl as a dependency
 
     const logout = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('http://localhost:5000/api/account/logout', {
+            const response = await fetch(`${apiUrl}/account/logout`, {
                 method: 'POST',
-                credentials: 'include'
+                credentials: 'include',
             });
 
             if (response.ok) {

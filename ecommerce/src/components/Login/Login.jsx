@@ -3,6 +3,10 @@ import { GoogleLogin } from '@react-oauth/google';
 import './Login.css';
 import { useRef } from 'react';
 
+// Dynamically set the API URL based on environment
+const apiUrl = import.meta.env.MODE === 'development'
+  ? 'http://localhost:5000/api/auth/google' // Local URL during development
+  : '/api/auth/google'; // Relative API route in production (Vercel)
 
 const Login = () => {
     const formRef = useRef(null);
@@ -12,17 +16,14 @@ const Login = () => {
         await formRef.current.submit();
     }
 
-
     return <div className='login'>
-
         <h4>
             Sign In using Google OAuth
         </h4>
         <form
-            action='http://localhost:5000/api/auth/google'
+            action={apiUrl}
             method='POST'
             ref={formRef}>
-
             <input type="hidden" name='token' />
             <GoogleLogin
                 onSuccess={handleLoginSuccess}
@@ -31,9 +32,7 @@ const Login = () => {
                 }}
             />
         </form>
-
     </div>
-
 }
 
 export default Login;

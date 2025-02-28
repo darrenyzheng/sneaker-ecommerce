@@ -2,13 +2,18 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import { RiSubtractFill } from "react-icons/ri";
 import { IoAddOutline, IoTrashSharp } from "react-icons/io5";
 import { loadStripe } from '@stripe/stripe-js';
-import { EmbeddedCheckoutProvider, EmbeddedCheckout} from '@stripe/react-stripe-js';
+import { EmbeddedCheckoutProvider, EmbeddedCheckout } from '@stripe/react-stripe-js';
 import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import './Cart.css';
 
 const STRIPE_PUBLISHABLE_KEY = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;
 const stripePromise = loadStripe(STRIPE_PUBLISHABLE_KEY);
+
+// Dynamically set the API URL based on environment
+const apiUrl = import.meta.env.MODE === 'development'
+  ? 'http://localhost:5000/api' // Local API during development
+  : '/api'; // Relative API route in production (Vercel)
 
 const Cart = () => {
     const [cartData, setCartData] = useState({});
@@ -18,13 +23,12 @@ const Cart = () => {
     const navigate = useNavigate();
 
     const fetchClientSecret = useCallback(() => {
-        return fetch('http://localhost:5000/api/checkout/create-checkout-session', {
+        return fetch(`${apiUrl}/checkout/create-checkout-session`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             credentials: 'include',
-
         }).then((res) =>
             res.json())
             .then((data) => data.clientSecret)
@@ -43,7 +47,7 @@ const Cart = () => {
 
     const fetchCart = async () => {
         try {
-            const response = await fetch('http://localhost:5000/api/cart', {
+            const response = await fetch(`${apiUrl}/cart`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -78,7 +82,7 @@ const Cart = () => {
         };
 
         try {
-            const response = await fetch('http://localhost:5000/api/cart/add', {
+            const response = await fetch(`${apiUrl}/cart/add`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -106,12 +110,12 @@ const Cart = () => {
 
         const product = {
             id: sneaker.id,
-            quantity: - 1,
+            quantity: -1,
             stock: sneaker.stock,
         };
 
         try {
-            const response = await fetch('http://localhost:5000/api/cart/add', {
+            const response = await fetch(`${apiUrl}/cart/add`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -139,7 +143,7 @@ const Cart = () => {
         };
 
         try {
-            const response = await fetch('http://localhost:5000/api/cart/delete', {
+            const response = await fetch(`${apiUrl}/cart/delete`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -149,7 +153,6 @@ const Cart = () => {
             });
 
             if (!response.ok) {
-
                 return;
             }
             await fetchCart();
@@ -276,7 +279,6 @@ const Cart = () => {
                         <b> Subtotal: </b>${totalPrice}
                     </p>
                 </div>
-
 
                 <div>
                     <p>

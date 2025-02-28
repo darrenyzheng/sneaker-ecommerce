@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import './Account.css';
+
 const DEFAULT_PICTURE = './Default_Profile_Pic.jpg';
 
 const Account = () => {
@@ -9,7 +10,12 @@ const Account = () => {
     const [img, setImg] = useState({});
 
     useEffect(() => {
-        fetch('http://localhost:5000/api/account', {
+        // Set the API URL dynamically based on the environment
+        const apiUrl = import.meta.env.MODE === 'development'
+            ? 'http://localhost:5000/api'  // Local API during development
+            : '/api';  // Relative API route in production (Vercel)
+
+        fetch(`${apiUrl}/account`, {
             method: 'GET',
             credentials: 'include',
         })
@@ -27,7 +33,8 @@ const Account = () => {
             .catch((err) => {
                 console.error('Fetch error:', err);
             });
-    }, []);
+    }, [navigate]);
+
     return (
         <>
             <div className='account'>
@@ -52,12 +59,8 @@ const Account = () => {
                         alt="profile picture"
                         onError={() => setImg(DEFAULT_PICTURE)} />
                 </div>
-
-
             </div>
         </>
-
-
     )
 }
 

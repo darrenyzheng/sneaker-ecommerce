@@ -2,14 +2,17 @@ import React, { useEffect, useState } from "react";
 import Sneaker from '../Sneaker/Sneaker';
 import { IoArrowDownOutline, IoArrowUpOutline, IoChevronBackSharp, IoChevronForwardSharp } from "react-icons/io5";
 import './Shop.css';
-const Shop = () => {
 
+const Shop = () => {
     const [data, setData] = useState([]);
+    
+    // Dynamically set the API base URL based on environment
+    const apiUrl = import.meta.env.MODE === 'development'
+        ? 'http://localhost:5000/api'  // Local API during development
+        : '/api';  // Relative API route in production
 
     useEffect(() => {
-        fetch('http://localhost:5000/api/shop', {
-            method: 'GET',
-        })
+        fetch(`${apiUrl}/shop`, { method: 'GET' })
             .then((response) => {
                 if (!response.ok) {
                     throw new Error(`HTTP error ${response.status}`);
@@ -20,7 +23,7 @@ const Shop = () => {
                 const formattedSneakers = data.map((sneaker) => {
                     if (!sneaker.release_date) return sneaker;
                     const [year, month, day] = sneaker.release_date.split('-');
-                    return { ...sneaker, release_date: `${month}/${day}/${year}` }; 
+                    return { ...sneaker, release_date: `${month}/${day}/${year}` };
                 });
                 formattedSneakers.sort((a, b) => a.id - b.id);
                 setData(formattedSneakers);
@@ -28,7 +31,7 @@ const Shop = () => {
             .catch((err) => {
                 console.error('Fetch error:', err);
             });
-    }, []);
+    }, [apiUrl]);
 
     const [filteredSneakers, setFilteredSneakers] = useState([]);
     const [isBrandChecked, setIsBrandChecked] = useState(true);
@@ -104,79 +107,81 @@ const Shop = () => {
         setCurrentPage(1);
     };
 
-    return (<div>
-        <div className="header">
-            <h1> LATEST RELEASES</h1>
-        </div>
-        <form>
-            <h1> Filter</h1>
-            <p> {filteredSneakers?.length} {filteredSneakers?.length === 1 ? 'product' : 'products'} </p>
+    return (
+        <div>
+            <div className="header">
+                <h1> LATEST RELEASES</h1>
+            </div>
+            <form>
+                <h1> Filter</h1>
+                <p> {filteredSneakers?.length} {filteredSneakers?.length === 1 ? 'product' : 'products'} </p>
 
-            <select className="sort" id="" value={sortOption} onChange={(e) => setSortOption(e.target.value)}>
-                <option value="original"> Original Sorting </option>
-                <option value="pricelowtohigh"> Price (lowest to highest) </option>
-                <option value="pricehightolow"> Price (highest to lowest) </option>
-                <option value="releasedateoldtonew"> Release Date (oldest to newest) </option>
-                <option value="releasedatenewtoold"> Release Date (newest to oldest) </option>
-            </select>
+                <select className="sort" value={sortOption} onChange={(e) => setSortOption(e.target.value)}>
+                    <option value="original"> Original Sorting </option>
+                    <option value="pricelowtohigh"> Price (lowest to highest) </option>
+                    <option value="pricehightolow"> Price (highest to lowest) </option>
+                    <option value="releasedateoldtonew"> Release Date (oldest to newest) </option>
+                    <option value="releasedatenewtoold"> Release Date (newest to oldest) </option>
+                </select>
 
-            <div className="accordion">
-                <div className='wrapper' onClick={() => setIsBrandChecked(prev => !prev)}>
-                    <h2>Brand </h2>
-                    {isBrandChecked ? <IoArrowUpOutline size={30} /> : <IoArrowDownOutline size={30} />}
+                <div className="accordion">
+                    <div className='wrapper' onClick={() => setIsBrandChecked(prev => !prev)}>
+                        <h2>Brand </h2>
+                        {isBrandChecked ? <IoArrowUpOutline size={30} /> : <IoArrowDownOutline size={30} />}
+                    </div>
+                    <div className={`items ${isBrandChecked ? 'expand' : 'collapse'}`}>
+                        {[...new Set(data?.map(sneaker => sneaker.brand))].map((brand, index) => (
+                            <div key={index}>
+                                <input type="checkbox" id={brand} value={brand} onChange={handleBrandCheckbox} />
+                                <label htmlFor={brand}>{brand}</label>
+                            </div>
+                        ))}
+                    </div>
                 </div>
-                <div className={`items ${isBrandChecked ? 'expand' : 'collapse'}`}>
-                    {[...new Set(data?.map(sneaker => sneaker.brand))].map((brand, index) => (
-                        <div key={index}>
-                            <input type="checkbox" id={brand} value={brand} onChange={handleBrandCheckbox} />
-                            <label htmlFor={brand}>{brand}</label>
-                        </div>
-                    ))}
+
+                <div className="accordion">
+                    <div className="wrapper" onClick={() => setIsPriceChecked(prev => !prev)}>
+                        <h2>Price </h2>
+                        {isPriceChecked ? <IoArrowUpOutline size={30} /> : <IoArrowDownOutline size={30} />}
+                    </div>
+                    <div className={`items ${isPriceChecked ? 'expand' : 'collapse'} prices`}>
+                        <input type="number" placeholder="Minimum" min='0' onChange={(e) => setSelectedMinimum(e.target.value)} />
+                        <input type="number" placeholder="Maximum" min='0' onChange={(e) => setSelectedMaximum(e.target.value)} />
+                    </div>
                 </div>
+
+                <div className="accordion">
+                    <div className="wrapper" onClick={() => setIsReleaseDateChecked(prev => !prev)}>
+                        <h2>Release Date </h2>
+                        {isReleaseDateChecked ? <IoArrowUpOutline size={30} /> : <IoArrowDownOutline size={30} />}
+                    </div>
+                    <div className={`items ${isReleaseDateChecked ? 'expand' : 'collapse'}`}>
+                        {[...new Set(data?.map(sneaker => sneaker?.release_date.slice(-4)))].sort((a, b) => a - b).map((releaseYear) => (
+                            <div key={releaseYear}>
+                                <input type="checkbox" id={releaseYear} value={releaseYear} onChange={handleYearCheckbox} />
+                                <label htmlFor={releaseYear}>{releaseYear}</label>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </form>
+
+            <div className='sneakers'>
+                {sneakersPerPage?.map((sneaker) =>
+                    <Sneaker key={sneaker.id} id={sneaker.id} name={sneaker.name} brand={sneaker.brand} size={sneaker.size} resellPrice={sneaker.resell_price} image={sneaker.image_path} releaseDate={sneaker.release_date} />
+                )}
             </div>
 
-            <div className="accordion">
-                <div className="wrapper" onClick={() => setIsPriceChecked(prev => !prev)}>
-                    <h2>Price </h2>
-                    {isPriceChecked ? <IoArrowUpOutline size={30} /> : <IoArrowDownOutline size={30} />}
-                </div>
-                <div className={`items ${isPriceChecked ? 'expand' : 'collapse'} prices`}>
-                    <input type="number" placeholder="Minimum" min='0' onChange={(e) => setSelectedMinimum(e.target.value)} />
-                    <input type="number" placeholder="Maximum" min='0' onChange={(e) => setSelectedMaximum(e.target.value)} />
-                </div>
-            </div>
-
-            <div className="accordion">
-                <div className="wrapper" onClick={() => setIsReleaseDateChecked(prev => !prev)}>
-                    <h2>Release Date </h2>
-                    {isReleaseDateChecked ? <IoArrowUpOutline size={30} /> : <IoArrowDownOutline size={30} />}
-                </div>
-                <div className={`items ${isReleaseDateChecked ? 'expand' : 'collapse'}`}>
-                    {[...new Set(data?.map(sneaker => sneaker?.release_date.slice(-4)))].sort((a, b) => a - b).map((releaseYear) => (
-                        <div key={releaseYear}>
-                            <input type="checkbox" id={releaseYear} value={releaseYear} onChange={handleYearCheckbox} />
-                            <label htmlFor={releaseYear}>{releaseYear}</label>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </form>
-        <div className='sneakers'>
-            {sneakersPerPage?.map((sneaker) =>
-                <Sneaker key={sneaker.id} id={sneaker.id} name={sneaker.name} brand={sneaker.brand} size={sneaker.size} resellPrice={sneaker.resell_price} image={sneaker.image_path} releaseDate={sneaker.release_date} />
-            )}
-        </div >
-        <div className='pagination'>
-            <>
+            <div className='pagination'>
                 <IoChevronBackSharp size={30} onClick={() => setCurrentPage(prevPage => Math.max(prevPage - 1, 1))} />
                 {currentPage}
                 <IoChevronForwardSharp
                     size={30}
-                    onClick={() =>setCurrentPage(prevPage =>Math.min(prevPage + 1, Math.ceil(filteredSneakers.length / postsPerPage)))}/>
-            </>
+                    onClick={() => setCurrentPage(prevPage => Math.min(prevPage + 1, Math.ceil(filteredSneakers.length / postsPerPage)))}
+                />
+            </div>
         </div>
-    </div>
-    )
-}
+    );
+};
 
 export default Shop;
