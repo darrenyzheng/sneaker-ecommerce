@@ -63,6 +63,7 @@ p {
   text-decoration: none;
 }
 
-a:visited {
+a {
+  color: inherit; /* Inherit the color from the parent */
   text-decoration: none;
 }
