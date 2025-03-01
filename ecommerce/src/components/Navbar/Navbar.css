@@ -10,7 +10,9 @@
     min-width: 600px;
 }
 
-
+.navbar li {
+    color: white;
+}
 .navbar li.active {
     color: #999999;
 }
