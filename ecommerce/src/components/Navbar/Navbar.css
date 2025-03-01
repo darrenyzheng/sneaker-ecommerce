@@ -10,7 +10,7 @@
     min-width: 600px;
 }
 
-.navbar li {
+.navbar li a:visited {
     color: white;
 }
 .navbar li.active {
