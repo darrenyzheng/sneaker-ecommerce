@@ -3,13 +3,7 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "ecommerce/api/server.js"
-    }
-  ],
-  "builds": [
-    {
-      "src": "ecommerce/package.json",
-      "use": "@vercel/node"
+      "destination": "/api/server.js"
     }
   ]
 }
