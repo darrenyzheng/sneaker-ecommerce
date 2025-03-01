@@ -10,9 +10,15 @@
     min-width: 600px;
 }
 
-.navbar li a:visited {
-    color: white;
+.navbar a {
+    color: white; /* Default color */
+    text-decoration: none;
 }
+
+.navbar a:visited {
+    color: white; /* Keep visited links white */
+}
+
 .navbar li.active {
     color: #999999;
 }
