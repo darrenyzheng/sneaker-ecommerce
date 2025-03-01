@@ -10,9 +10,6 @@
     min-width: 600px;
 }
 
-.navbar a:visited {
-    color: inherit;
-}
 
 .navbar li.active {
     color: #999999;
