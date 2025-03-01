@@ -71,7 +71,7 @@
   .cartSummary {
     display: flex;
     flex-direction: column;
-    height: 20%;
+    height: 25%;
     width: 30%;
     padding-top: 30px;
     margin-left: auto;
