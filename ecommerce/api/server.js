@@ -25,7 +25,6 @@ const REDIS_SECRET = process.env.REDIS_SECRET;
 
 let client;
 
-// ✅ Initialize Redis
 const initRedis = async () => {
     if (!client) {
         client = createClient({
@@ -44,14 +43,12 @@ const initRedis = async () => {
     }
 };
 
-// Start Redis before using it
 initRedis().then(() => {
     const redisStore = new RedisStore({
         client: client,
         prefix: "sneaker-ecommerce"
     });
 
-    // ✅ Session Middleware (Redis-backed session)
     app.use(session({
         secret: 'keyboard cat',
         store: redisStore,
@@ -60,15 +57,12 @@ initRedis().then(() => {
         cookie: { secure: false, httpOnly: true, maxAge: 1000 * 60 * 60 * 24 }
     }));
 
-    // ✅ General Middleware
     app.use(express.json());
     app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
 
-    // ✅ Passport Middleware
     app.use(passport.initialize());
     app.use(passport.session());
 
-    // ✅ API Routes
     app.use('/api/auth', googleRoutes);
     app.use('/api/cart', cartRoutes);
     app.use('/api/account', accountRoutes);
@@ -76,7 +70,6 @@ initRedis().then(() => {
     app.use('/api/shop', shopRoutes);
     app.use('/api/checkout', checkoutRoutes);
 
-    // ✅ Start the Server
     app.listen(port, (error) => {
         if (error) {
             console.error("❌ Server startup error:", error);
@@ -85,11 +78,10 @@ initRedis().then(() => {
         }
     });
 
-    // ✅ Initialize the Database
     initDatabase();
 }).catch(err => {
     console.error("❌ Failed to initialize Redis:", err);
-    process.exit(1); // Exit if Redis fails
+    process.exit(1); 
 });
 
 export default app;

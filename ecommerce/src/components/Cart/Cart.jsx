@@ -10,10 +10,9 @@ import './Cart.css';
 const STRIPE_PUBLISHABLE_KEY = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;
 const stripePromise = loadStripe(STRIPE_PUBLISHABLE_KEY);
 
-// Dynamically set the API URL based on environment
 const apiUrl = import.meta.env.MODE === 'development'
-  ? 'http://localhost:5000/api' // Local API during development
-  : '/api'; // Relative API route in production (Vercel)
+  ? 'http://localhost:5000/api' 
+  : '/api'; 
 
 const Cart = () => {
     const [cartData, setCartData] = useState({});
