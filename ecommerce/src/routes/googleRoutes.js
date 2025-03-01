@@ -18,7 +18,7 @@ router.get('/google/redirect',
                 console.error('Error saving session:', err);
             }
             else {
-                res.redirect('http://localhost:5173'); 
+                res.redirect('https://sneaker-ecommerce-six.vercel.app/'); 
             }
         });
     }
