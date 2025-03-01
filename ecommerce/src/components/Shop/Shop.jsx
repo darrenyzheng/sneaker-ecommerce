@@ -6,10 +6,9 @@ import './Shop.css';
 const Shop = () => {
     const [data, setData] = useState([]);
     
-    // Dynamically set the API base URL based on environment
     const apiUrl = import.meta.env.MODE === 'development'
-    ? 'http://localhost:5000/api'  // Local API during development
-    : '/api';  // Absolute URL in production
+    ? 'http://localhost:5000/api' 
+    : '/api'; 
 
     useEffect(() => {
         fetch(`${apiUrl}/shop`, { method: 'GET' })

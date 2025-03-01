@@ -6,19 +6,22 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { styled } from '@mui/material/styles'; 
+import { styled } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 
 
 const Transactions = () => {
-    const [rows, setRows] = useState([]); 
+    const [rows, setRows] = useState([]);
     const navigate = useNavigate();
 
-    
+    const apiUrl = import.meta.env.MODE === 'development'
+        ? 'http://localhost:5000/api'
+        : '/api';
+
     useEffect(() => {
         const fetchTransactions = async () => {
             try {
-                const response = await fetch('http://localhost:5000/api/account/transactions', {
+                const response = await fetch(`${apiUrl}/account/transactions`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json"
@@ -35,13 +38,13 @@ const Transactions = () => {
                 const formattedRows = data.transactions?.map(transaction =>
                     createData(transaction.transaction_id, transaction.contents, transaction.date, transaction.total_price)
                 );
-                setRows(formattedRows); 
+                setRows(formattedRows);
             } catch (error) {
                 console.error('Error fetching transactions:', error);
             }
         };
         fetchTransactions();
-    }, []);
+    }, [apiUrl]);
 
     function createData(transaction_id, contents, date, total_price) {
         return { transaction_id, contents, date, total_price };
@@ -49,7 +52,7 @@ const Transactions = () => {
 
     const StyledTableCell = styled(TableCell)(({ theme }) => ({
         backgroundColor: theme.palette.action.hover,
-        color: theme.palette.text.primary, 
+        color: theme.palette.text.primary,
         fontSize: 14,
         '&.MuiTableCell-head': {
             backgroundColor: theme.palette.grey[500],

@@ -10,10 +10,9 @@ const Account = () => {
     const [img, setImg] = useState({});
 
     useEffect(() => {
-        // Set the API URL dynamically based on the environment
         const apiUrl = import.meta.env.MODE === 'development'
-            ? 'http://localhost:5000/api'  // Local API during development
-            : '/api';  // Relative API route in production (Vercel)
+            ? 'http://localhost:5000/api'  
+            : '/api';  
 
         fetch(`${apiUrl}/account`, {
             method: 'GET',
