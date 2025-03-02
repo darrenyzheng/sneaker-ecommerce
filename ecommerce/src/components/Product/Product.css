@@ -71,6 +71,7 @@
   .stock svg:first-of-type {
     position: absolute;
     right: 5%;
+    cursor: pointer;
   }
   
   .stock svg:first-of-type.inactive {
@@ -86,11 +87,14 @@
   .stock svg:last-of-type {
     position: absolute;
     left: 5%;
+    cursor: pointer;
+
   }
   
   .stock svg:last-of-type.inactive {
     opacity: 0;
     pointer-events: none;
+    
   }
   
   
