@@ -5,8 +5,10 @@ import { updateStock } from './sneaker.controller.js';
 async function addToCart(req) {
     const cart = req.session.cart;
     const { id, quantity, stock } = req.body;
-    console.log(req.body);
 
+    if (stock == 0) {
+        return false;
+    }
     if (cart[id] && (cart[id] + quantity) > stock) {
         return false; 
     }

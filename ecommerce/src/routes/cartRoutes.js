@@ -11,7 +11,6 @@ router.post('/add', async (req, res) => {
     try {
         const successful = await addToCart(req); 
 
-        console.log(successful);
         if (!successful) {
             return res.status(409).json({ error: "Not enough stock" });
         }
