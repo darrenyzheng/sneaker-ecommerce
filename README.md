@@ -36,7 +36,8 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-PROJECT DESCRIPTION
+I was really into collecting sneakers as a teenager, frequently visiting websites such grailed.com and stockx.com so that I could see the prices of my most coveted sneakers. I created this application so that I could practice my web development skills and learn new technoligies such as using Google OAuth to login and Stripe API for payment authentication. 
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -46,7 +47,6 @@ PROJECT DESCRIPTION
 * [![Express][Express.js]][Express-url]
 * [![React][React.js]][React-url]
 * [![Node.js][Node.js]][Node-url]
-* [![Playwright][Playwright]][Playwright-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -59,56 +59,113 @@ PROJECT DESCRIPTION
 
 ### Installation
 
-1. Get API Key at [API Provider](API_URL)
-2. Clone the repo
+1. Make an account for Stripe and get your publishable and secret keys from [Stripe](https://stripe.com)
+
+2. Go to [Google Console](https://console.cloud.google.com/), register the application's redirect URIs, and get the Google OAuth Client ID and Client Secret
+  
+3. Clone the repo
    ```sh
-   git clone https://github.com/YOUR_USERNAME/REPO_NAME.git
+   git clone https://github.com/YOUR_USERNAME/sneaker_ecommerce.git
    ```
-3. Install NPM packages
+4. Install NPM packages
    ```sh
    npm install
    ```
-4. Enter your keys in a `.env` file
+5. Enter your keys in a `.env` file
    ```sh
    VARIABLE_NAME=YOUR_VALUE
    ```
-5. Start the React app
+6. Start the React app
    ```sh
-   cd game
-   npm start
+   cd ecommerce
+   npm run dev
    ```
-6. Start the backend server
+7. Start the backend server
    ```sh
-   cd game
-   node server.mjs
+   cd ecomerce
+   cd api
+   node server.js
    ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- USAGE EXAMPLES -->
+
 ## Usage
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+<figure>
+  <img src='https://github.com/user-attachments/assets/fece4d9e-f6ff-44c0-832e-b46da73684c3' alt="Shop page"/>
+  <figcaption><strong> Home </strong></figcaption>
+</figure>
+<br/>
+<br/>
+
+<figure>
+  <img src='https://github.com/user-attachments/assets/bd848173-a0b1-4f67-8a55-30a8e46d7059' alt="Product page"/>
+  <figcaption><strong> Example product  </strong></figcaption>
+</figure>
+<br/>
+<br/>
+
+<figure>
+  <img src='https://github.com/user-attachments/assets/10e6acb8-b069-4e9f-a88a-5d3acd6d0a30' alt="OAuth page"/>
+  <figcaption><strong> Logging in via Oauth </strong></figcaption>
+</figure>
+<br/>
+<br/>
+
+<figure>
+  <img src='https://github.com/user-attachments/assets/16397e5f-f37c-4a88-8e51-6405b04c0aa2' alt="Account page"/>
+  <figcaption><strong> User's settings based off of their Google profile </strong></figcaption>
+</figure>
+<br/>
+<br/>
+
+<figure>
+  <img src='https://github.com/user-attachments/assets/a21161a7-cbcd-4dd4-9edf-3cf2f9e0ab5d' alt="Cart page"/>
+  <figcaption><strong> A user's cart </strong></figcaption>
+</figure>
+<br/>
+<br/>
+
+<figure>
+  <img src='https://github.com/user-attachments/assets/3545fb4d-87eb-4d4d-9039-c2a90c31511e' alt="Stripe API transaction "/>
+  <figcaption><strong> Stripe API's transaction page </strong></figcaption>
+</figure>
+<br/>
+<br/>
+<figure>
+  <img src='https://github.com/user-attachments/assets/5ee93cca-4512-4775-ad6e-66002e7e939d' alt="Transactions page"/>
+  <figcaption><strong> A list of the user's transactions </strong></figcaption>
+</figure>
+<br/>
+<br/>
+
+
+
+
+
 <!-- CONTACT -->
 ## Contact
 
-Project Link: [YOUR_PROJECT_LINK](YOUR_PROJECT_URL)
+Project Link: [Sneaker Ecommerce](https://github.com/darrenyzheng/sneaker-ecommerce)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- LESSONS LEARNED -->
 ## Lessons Learned
 
-<p> BRIEF LESSONS LEARNED DESCRIPTION </p>
+<p> I had some trouble converting the values from the cart of the user to the Stripe modal's dynamic price because Stripe wanted to use the component's values initially on mount so I had to get creative on getting that information to the modal as it dynamically changes. I also understand the purpose of putting the API routes in their own separate folder as it helps with routing and deploying to Vercel, leaving the other routes to be handled by the index.html file. </p>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-* [Resource 1](RESOURCE_1_URL)
-* [Resource 2](RESOURCE_2_URL)
+* [Stripe API](https://docs.stripe.com/)
+* [Google OAuth](https://developers.google.com/identity/protocols/oauth2)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
